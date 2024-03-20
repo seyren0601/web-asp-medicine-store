@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Medicine_Store.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240319104702_Init")]
-    partial class Init
+    [Migration("20240320023205_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -22,56 +22,7 @@ namespace Medicine_Store.Migrations
                 .HasAnnotation("ProductVersion", "8.0.3")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("varchar(255)");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("Name")
-                        .HasMaxLength(256)
-                        .HasColumnType("varchar(256)");
-
-                    b.Property<string>("NormalizedName")
-                        .HasMaxLength(256)
-                        .HasColumnType("varchar(256)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NormalizedName")
-                        .IsUnique()
-                        .HasDatabaseName("RoleNameIndex");
-
-                    b.ToTable("AspNetRoles", (string)null);
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<string>("ClaimType")
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("ClaimValue")
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("RoleId")
-                        .IsRequired()
-                        .HasColumnType("varchar(255)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RoleId");
-
-                    b.ToTable("AspNetRoleClaims", (string)null);
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUser", b =>
+            modelBuilder.Entity("Medicine_Store.DAL.Entities.ApplicationUser", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("varchar(255)");
@@ -82,11 +33,6 @@ namespace Medicine_Store.Migrations
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("longtext");
-
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
-                        .HasMaxLength(21)
-                        .HasColumnType("varchar(21)");
 
                     b.Property<string>("Email")
                         .HasMaxLength(256)
@@ -138,10 +84,120 @@ namespace Medicine_Store.Migrations
                         .HasDatabaseName("UserNameIndex");
 
                     b.ToTable("AspNetUsers", (string)null);
+                });
 
-                    b.HasDiscriminator<string>("Discriminator").HasValue("IdentityUser");
+            modelBuilder.Entity("Medicine_Store.DAL.Entities.Chi_tiet_don_hang", b =>
+                {
+                    b.Property<int>("ma_don_hang")
+                        .HasColumnType("int");
 
-                    b.UseTphMappingStrategy();
+                    b.Property<string>("thuoc_id")
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<int>("so_luong_mua")
+                        .HasColumnType("int");
+
+                    b.HasKey("ma_don_hang", "thuoc_id");
+
+                    b.HasIndex("thuoc_id");
+
+                    b.ToTable("chi_tiet_don_hang", "medicine_store");
+                });
+
+            modelBuilder.Entity("Medicine_Store.DAL.Entities.Don_hang", b =>
+                {
+                    b.Property<int>("ma_don_hang")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("ApplicationUser")
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<bool>("da_thanh_toan")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<string>("user_id")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("ma_don_hang");
+
+                    b.HasIndex("ApplicationUser");
+
+                    b.ToTable("don_hang", "medicine_store");
+                });
+
+            modelBuilder.Entity("Medicine_Store.DAL.Entities.Thuoc", b =>
+                {
+                    b.Property<string>("thuoc_id")
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<int>("don_gia")
+                        .HasColumnType("int");
+
+                    b.Property<string>("hoat_chat")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<int>("so_luong_ton")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ten")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("thuoc_id");
+
+                    b.ToTable("thuoc", "medicine_store");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(256)
+                        .HasColumnType("varchar(256)");
+
+                    b.Property<string>("NormalizedName")
+                        .HasMaxLength(256)
+                        .HasColumnType("varchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedName")
+                        .IsUnique()
+                        .HasDatabaseName("RoleNameIndex");
+
+                    b.ToTable("AspNetRoles", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("RoleId")
+                        .IsRequired()
+                        .HasColumnType("varchar(255)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetRoleClaims", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -227,11 +283,28 @@ namespace Medicine_Store.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("Medicine_Store.DAL.Entities.ApplicationUser", b =>
+            modelBuilder.Entity("Medicine_Store.DAL.Entities.Chi_tiet_don_hang", b =>
                 {
-                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
+                    b.HasOne("Medicine_Store.DAL.Entities.Don_hang", null)
+                        .WithMany("Chi_Tiet_Don_Hang")
+                        .HasForeignKey("ma_don_hang")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.HasDiscriminator().HasValue("ApplicationUser");
+                    b.HasOne("Medicine_Store.DAL.Entities.Thuoc", null)
+                        .WithMany("Don_hang")
+                        .HasForeignKey("thuoc_id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Medicine_Store.DAL.Entities.Don_hang", b =>
+                {
+                    b.HasOne("Medicine_Store.DAL.Entities.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("ApplicationUser");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -245,7 +318,7 @@ namespace Medicine_Store.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                    b.HasOne("Medicine_Store.DAL.Entities.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -254,7 +327,7 @@ namespace Medicine_Store.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                    b.HasOne("Medicine_Store.DAL.Entities.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -269,7 +342,7 @@ namespace Medicine_Store.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                    b.HasOne("Medicine_Store.DAL.Entities.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -278,11 +351,21 @@ namespace Medicine_Store.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                    b.HasOne("Medicine_Store.DAL.Entities.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Medicine_Store.DAL.Entities.Don_hang", b =>
+                {
+                    b.Navigation("Chi_Tiet_Don_Hang");
+                });
+
+            modelBuilder.Entity("Medicine_Store.DAL.Entities.Thuoc", b =>
+                {
+                    b.Navigation("Don_hang");
                 });
 #pragma warning restore 612, 618
         }

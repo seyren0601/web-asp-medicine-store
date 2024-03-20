@@ -7,11 +7,14 @@ using MySql.EntityFrameworkCore.Metadata;
 namespace Medicine_Store.Migrations
 {
     /// <inheritdoc />
-    public partial class Init : Migration
+    public partial class init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.EnsureSchema(
+                name: "medicine_store");
+
             migrationBuilder.AlterDatabase()
                 .Annotation("MySQL:Charset", "utf8mb4");
 
@@ -35,7 +38,6 @@ namespace Medicine_Store.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "varchar(255)", nullable: false),
-                    Discriminator = table.Column<string>(type: "varchar(21)", maxLength: 21, nullable: false),
                     UserName = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: true),
@@ -54,6 +56,23 @@ namespace Medicine_Store.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                })
+                .Annotation("MySQL:Charset", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "thuoc",
+                schema: "medicine_store",
+                columns: table => new
+                {
+                    thuoc_id = table.Column<string>(type: "varchar(255)", nullable: false),
+                    hoat_chat = table.Column<string>(type: "longtext", nullable: false),
+                    ten = table.Column<string>(type: "longtext", nullable: false),
+                    so_luong_ton = table.Column<int>(type: "int", nullable: false),
+                    don_gia = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_thuoc", x => x.thuoc_id);
                 })
                 .Annotation("MySQL:Charset", "utf8mb4");
 
@@ -168,6 +187,57 @@ namespace Medicine_Store.Migrations
                 })
                 .Annotation("MySQL:Charset", "utf8mb4");
 
+            migrationBuilder.CreateTable(
+                name: "don_hang",
+                schema: "medicine_store",
+                columns: table => new
+                {
+                    ma_don_hang = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    user_id = table.Column<string>(type: "longtext", nullable: false),
+                    ApplicationUser = table.Column<string>(type: "varchar(255)", nullable: true),
+                    da_thanh_toan = table.Column<bool>(type: "tinyint(1)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_don_hang", x => x.ma_don_hang);
+                    table.ForeignKey(
+                        name: "FK_don_hang_AspNetUsers_ApplicationUser",
+                        column: x => x.ApplicationUser,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                })
+                .Annotation("MySQL:Charset", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "chi_tiet_don_hang",
+                schema: "medicine_store",
+                columns: table => new
+                {
+                    ma_don_hang = table.Column<int>(type: "int", nullable: false),
+                    thuoc_id = table.Column<string>(type: "varchar(255)", nullable: false),
+                    so_luong_mua = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_chi_tiet_don_hang", x => new { x.ma_don_hang, x.thuoc_id });
+                    table.ForeignKey(
+                        name: "FK_chi_tiet_don_hang_don_hang_ma_don_hang",
+                        column: x => x.ma_don_hang,
+                        principalSchema: "medicine_store",
+                        principalTable: "don_hang",
+                        principalColumn: "ma_don_hang",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_chi_tiet_don_hang_thuoc_thuoc_id",
+                        column: x => x.thuoc_id,
+                        principalSchema: "medicine_store",
+                        principalTable: "thuoc",
+                        principalColumn: "thuoc_id",
+                        onDelete: ReferentialAction.Cascade);
+                })
+                .Annotation("MySQL:Charset", "utf8mb4");
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -204,6 +274,18 @@ namespace Medicine_Store.Migrations
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_chi_tiet_don_hang_thuoc_id",
+                schema: "medicine_store",
+                table: "chi_tiet_don_hang",
+                column: "thuoc_id");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_don_hang_ApplicationUser",
+                schema: "medicine_store",
+                table: "don_hang",
+                column: "ApplicationUser");
         }
 
         /// <inheritdoc />
@@ -225,7 +307,19 @@ namespace Medicine_Store.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "chi_tiet_don_hang",
+                schema: "medicine_store");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "don_hang",
+                schema: "medicine_store");
+
+            migrationBuilder.DropTable(
+                name: "thuoc",
+                schema: "medicine_store");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

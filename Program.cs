@@ -1,6 +1,7 @@
 using Medicine_Store.DAL;
 using Microsoft.EntityFrameworkCore;
 using Medicine_Store.DAL.Entities;
+using Medicine_Store.DAL.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +14,7 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
 }).AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddRazorPages();
 builder.Services.AddSwaggerGen();
+builder.Services.AddScoped<Service_Thuoc>();
 builder.Services.AddEndpointsApiExplorer();
 
 var app = builder.Build();

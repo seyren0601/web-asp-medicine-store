@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Org.BouncyCastle.Asn1.Mozilla;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Medicine_Store.DAL.Entities

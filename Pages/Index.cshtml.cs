@@ -10,6 +10,7 @@ namespace Medicine_Store.Pages
         private readonly ILogger<IndexModel> _logger;
         public Service_Thuoc _service_thuoc;
         public string MedSearch { get; set; }
+        public List<Thuoc> ListThuoc { get; set; }
 
         public IndexModel(ILogger<IndexModel> logger, Service_Thuoc _service_thuoc)
         {
@@ -19,7 +20,7 @@ namespace Medicine_Store.Pages
 
         public void OnGet()
         {
-
+            ListThuoc = _service_thuoc.GetAllThuoc();
         }
     }
 }

@@ -2,6 +2,7 @@ using Medicine_Store.DAL;
 using Microsoft.EntityFrameworkCore;
 using Medicine_Store.DAL.Entities;
 using Medicine_Store.DAL.Services;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 

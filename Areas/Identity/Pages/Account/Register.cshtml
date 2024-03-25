@@ -17,11 +17,12 @@
                 <label asp-for="Input.Email">Email</label>
                 <span asp-validation-for="Input.Email" class="text-danger"></span>
             </div>
-            <div class="form-floating mb-3">
-                <select asp-for="Input.Gender" class="form-control" aria-required="true">
-                    <option value="Nam">Nam</option>
-                    <option value="Nữ">Nữ</option>
-                </select>
+            <div class="form-check mb-3">
+                <input asp-for="Input.Gender" class="form-check-input" type="radio" name="Input.Gender" value="Nam" aria-required="true">
+                <label asp-for="Input.Gender" class="form-check-label">Nam</label>
+                <br />
+                <input asp-for="Input.Gender" class="form-check-input" type="radio" name="Input.Gender" value="Nữ" aria-required="true">
+                <label asp-for="Input.Gender" class="form-check-label">Nữ</label>
             </div>
             <div class="form-floating mb-3">
                 <input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />

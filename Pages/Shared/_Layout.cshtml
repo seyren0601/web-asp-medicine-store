@@ -1,4 +1,9 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity;
+@using Medicine_Store.DAL.Entities;
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -25,6 +30,12 @@
                                     <li><a class="dropdown-item" asp-page="/Index">Mới</a></li>
                                 </ul>
                             </li>
+                            @if(SignInManager.IsSignedIn(User) && Boolean.Parse(User.Claims.FirstOrDefault(x => x.Type == "Admin").Value))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link" aria-current="page" asp-page="">Store Manager</a>
+                                </li>
+                            }
                         </ul>
                         <partial name="_LoginPartial"/>
                     </div>

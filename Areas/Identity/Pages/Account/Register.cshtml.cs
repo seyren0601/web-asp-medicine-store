@@ -119,7 +119,6 @@ namespace Medicine_Store.Areas.Identity.Pages.Account
             if (ModelState.IsValid)
             {
                 var user = CreateUser();
-
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
                 var result = await _userManager.CreateAsync(user, Input.Password);
@@ -127,10 +126,21 @@ namespace Medicine_Store.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
-                    Console.WriteLine($"User {Input.Email} created");
 
+                    //Add claims to user
                     var claim = new Claim("Gender", Input.Gender);
                     await _userManager.AddClaimAsync(user, claim);
+                    
+                    if (Input.Email == "admin@a.com")
+                    {
+                        var claim_admin = new Claim("Admin", true.ToString(), ClaimValueTypes.Boolean);
+                        await _userManager.AddClaimAsync(user, claim_admin);
+                    }
+                    else
+                    {
+                        var claim_admin = new Claim("Admin", false.ToString(), ClaimValueTypes.Boolean);
+                        await _userManager.AddClaimAsync(user, claim_admin);
+                    }
 
                     var userId = await _userManager.GetUserIdAsync(user);
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);

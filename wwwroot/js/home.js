@@ -22,8 +22,24 @@ function OnClick_Them() {
                             thuoc_id: MedID,
                             amount:1
                         }
-                    ), // or JSON.stringify ({name: 'jonas'}),
-                    success: function (data) { cart_amount.text(parseInt(current_cart_amount) + 1) },
+                    ),
+                    success: function (data) {
+                        $.ajax({
+                            type: 'GET',
+                            url: 'https://localhost:7191/cart_amount/' + userID,
+                            success: function (data) {
+                                console.log(data);
+                                cart_amount.text(data);
+                                $.toast({
+                                    heading: 'THÊM THÀNH CÔNG VÀO GIỎ HÀNG',
+                                    text: 'Thêm thành công ' + MedID + ' vào giỏ hàng<br>Số lượng hiện tại: ' + data,
+                                    icon: 'success',
+                                    showHideTransition: 'fade',
+                                    position:'top-right'
+                                });
+                            }
+                        });
+                    },
                     contentType: "application/json",
                     dataType: 'json'
                 });
@@ -33,4 +49,8 @@ function OnClick_Them() {
     else {
         window.location.href = "/Identity/Account/Login";
     }
+}
+
+function UpdateCart(userID, cart_amount) {
+    
 }

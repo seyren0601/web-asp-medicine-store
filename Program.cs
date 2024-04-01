@@ -46,6 +46,13 @@ app.MapPost("/cart_details/{user_id}", (string user_id, Service_Cart service) =>
     return service.GetCartDetails(user_id);
 });
 
+app.MapGet("/cart_amount/{user_id}", (string user_id, Service_Cart service) =>
+{
+    List<Cart_details> details = service.GetCartDetails(user_id);
+    if (details != null) return details.Count;
+    else return StatusCodes.Status404NotFound;
+});
+
 app.MapPost("/add_cart", ([FromBody]AddCartRequest request, Service_Cart service) =>
 {
     return service.AddToCart(request.user_id, request.thuoc_id, request.amount);

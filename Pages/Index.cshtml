@@ -37,7 +37,6 @@
                         @{string ImageUrl = Model._service_thuoc.GetThuocImage(Thuoc).Result;}
                         <img src=@((ImageUrl!="" && ImageUrl != "https://drugbank.vn/api/public/gridfs/")?ImageUrl:"images/placeholder.jpg") class="card-img-top" alt="hinh_thuoc"/>
                         <div class="card-body p-4">
-                            test text
                             <div class="text-center">
                                 <div class="MedName h5">@Thuoc.ten</div>
                                 <div class="MedPrice">@($"{Thuoc.don_gia:n0}") &#8363;</div>
@@ -53,4 +52,5 @@
         </div>
     </div>
     <script src="~/js/home.js" type="text/javascript"></script>
+    <script src="~/js/jquery.toast.js" type="text/javascript"></script>
 </section>

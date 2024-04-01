@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Medicine_Store.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240320023205_init")]
+    [Migration("20240401092931_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -84,6 +84,45 @@ namespace Medicine_Store.Migrations
                         .HasDatabaseName("UserNameIndex");
 
                     b.ToTable("AspNetUsers", (string)null);
+                });
+
+            modelBuilder.Entity("Medicine_Store.DAL.Entities.Cart", b =>
+                {
+                    b.Property<int>("cart_id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("ApplicationUser")
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<string>("user_id")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("cart_id");
+
+                    b.HasIndex("ApplicationUser");
+
+                    b.ToTable("cart", "medicine_store");
+                });
+
+            modelBuilder.Entity("Medicine_Store.DAL.Entities.Cart_details", b =>
+                {
+                    b.Property<int>("cart_id")
+                        .HasColumnType("int");
+
+                    b.Property<int>("thuoc_id")
+                        .HasColumnType("int");
+
+                    b.Property<int>("amount")
+                        .HasColumnType("int");
+
+                    b.Property<int>("date")
+                        .HasColumnType("int");
+
+                    b.HasKey("cart_id", "thuoc_id");
+
+                    b.ToTable("cart_details", "medicine_store");
                 });
 
             modelBuilder.Entity("Medicine_Store.DAL.Entities.Chi_tiet_don_hang", b =>
@@ -281,6 +320,15 @@ namespace Medicine_Store.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
+                });
+
+            modelBuilder.Entity("Medicine_Store.DAL.Entities.Cart", b =>
+                {
+                    b.HasOne("Medicine_Store.DAL.Entities.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("ApplicationUser");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Medicine_Store.DAL.Entities.Chi_tiet_don_hang", b =>

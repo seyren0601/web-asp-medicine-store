@@ -37,20 +37,20 @@
                         @{string ImageUrl = Model._service_thuoc.GetThuocImage(Thuoc).Result;}
                         <img src=@((ImageUrl!="" && ImageUrl != "https://drugbank.vn/api/public/gridfs/")?ImageUrl:"images/placeholder.jpg") class="card-img-top" alt="hinh_thuoc"/>
                         <div class="card-body p-4">
+                            test text
                             <div class="text-center">
-                                <div class="h5" id="MedName">@Thuoc.ten</div>
-                                <div id="MedPrice">@($"{Thuoc.don_gia:n0}") &#8363;</div>
-                                <div id="MedID" style="display:none">@Thuoc.thuoc_id</div>
+                                <div class="MedName h5">@Thuoc.ten</div>
+                                <div class="MedPrice">@($"{Thuoc.don_gia:n0}") &#8363;</div>
+                                <div class="MedID" style="display:none">@Thuoc.thuoc_id</div>
                             </div>
                         </div>
                         <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                            <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#" onclick="OnClick_Them()">Thêm vào giỏ hàng</a></div>
+                            <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Thêm vào giỏ hàng</a></div>
                         </div>
                     </div>
                 </div>
             }
         </div>
     </div>
+    <script src="~/js/home.js" type="text/javascript"></script>
 </section>
-<script src="~/js/home.js" type="text/javascript"></script>
-

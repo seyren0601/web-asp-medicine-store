@@ -20,11 +20,13 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using System.Security.Claims;
+using Medicine_Store.DAL.Services;
 
 namespace Medicine_Store.Areas.Identity.Pages.Account
 {
     public class RegisterModel : PageModel
     {
+        private readonly Service_Cart _cartService;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IUserStore<ApplicationUser> _userStore;
@@ -37,7 +39,8 @@ namespace Medicine_Store.Areas.Identity.Pages.Account
             IUserStore<ApplicationUser> userStore,
             SignInManager<ApplicationUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            Service_Cart cartService)
         {
             _userManager = userManager;
             _userStore = userStore;
@@ -45,6 +48,7 @@ namespace Medicine_Store.Areas.Identity.Pages.Account
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _cartService = cartService;
         }
 
         /// <summary>
@@ -126,6 +130,9 @@ namespace Medicine_Store.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
+
+                    //Create cart for user
+                    _cartService.CreateCart(user.Id);
 
                     //Add claims to user
                     var claim = new Claim("Gender", Input.Gender);

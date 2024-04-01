@@ -31,5 +31,11 @@ namespace Medicine_Store.DAL.Services
             }
             else return "";
         }
+
+        public int GetStock(string thuoc_id)
+        {
+            Thuoc thuoc = _context.Thuoc.FirstOrDefault(t => t.thuoc_id == thuoc_id);
+            return thuoc.so_luong_ton;
+        }
     }
 }

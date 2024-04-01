@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using Medicine_Store.DAL.Entities;
 using Medicine_Store.DAL.Services;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using System.Drawing.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +18,7 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
 builder.Services.AddRazorPages();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<Service_Thuoc>();
+builder.Services.AddScoped<Service_Cart>();
 builder.Services.AddEndpointsApiExplorer();
 
 var app = builder.Build();
@@ -38,4 +41,26 @@ app.UseAuthentication();
 app.UseAuthorization();
 app.MapRazorPages();
 
+app.MapPost("/cart_details/{user_id}", (string user_id, Service_Cart service) =>
+{
+    return service.GetCartDetails(user_id);
+});
+
+app.MapPost("/add_cart", ([FromBody]AddCartRequest request, Service_Cart service) =>
+{
+    return service.AddToCart(request.user_id, request.thuoc_id, request.amount);
+});
+
+app.MapGet("/get_stock/{thuoc_id}", (string thuoc_id, Service_Thuoc service) =>
+{
+    return service.GetStock(thuoc_id);
+});
+
 app.Run();
+
+record AddCartRequest
+{
+    public string user_id { get; set; }
+    public string thuoc_id { get; set; }
+    public int amount { get; set; }
+}

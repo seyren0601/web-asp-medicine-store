@@ -60,6 +60,22 @@ namespace Medicine_Store.Migrations
                 .Annotation("MySQL:Charset", "utf8mb4");
 
             migrationBuilder.CreateTable(
+                name: "cart_details",
+                schema: "medicine_store",
+                columns: table => new
+                {
+                    cart_id = table.Column<int>(type: "int", nullable: false),
+                    thuoc_id = table.Column<int>(type: "int", nullable: false),
+                    amount = table.Column<int>(type: "int", nullable: false),
+                    date = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_cart_details", x => new { x.cart_id, x.thuoc_id });
+                })
+                .Annotation("MySQL:Charset", "utf8mb4");
+
+            migrationBuilder.CreateTable(
                 name: "thuoc",
                 schema: "medicine_store",
                 columns: table => new
@@ -188,6 +204,27 @@ namespace Medicine_Store.Migrations
                 .Annotation("MySQL:Charset", "utf8mb4");
 
             migrationBuilder.CreateTable(
+                name: "cart",
+                schema: "medicine_store",
+                columns: table => new
+                {
+                    cart_id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    user_id = table.Column<string>(type: "longtext", nullable: false),
+                    ApplicationUser = table.Column<string>(type: "varchar(255)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_cart", x => x.cart_id);
+                    table.ForeignKey(
+                        name: "FK_cart_AspNetUsers_ApplicationUser",
+                        column: x => x.ApplicationUser,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                })
+                .Annotation("MySQL:Charset", "utf8mb4");
+
+            migrationBuilder.CreateTable(
                 name: "don_hang",
                 schema: "medicine_store",
                 columns: table => new
@@ -276,6 +313,12 @@ namespace Medicine_Store.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_cart_ApplicationUser",
+                schema: "medicine_store",
+                table: "cart",
+                column: "ApplicationUser");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_chi_tiet_don_hang_thuoc_id",
                 schema: "medicine_store",
                 table: "chi_tiet_don_hang",
@@ -305,6 +348,14 @@ namespace Medicine_Store.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "cart",
+                schema: "medicine_store");
+
+            migrationBuilder.DropTable(
+                name: "cart_details",
+                schema: "medicine_store");
 
             migrationBuilder.DropTable(
                 name: "chi_tiet_don_hang",

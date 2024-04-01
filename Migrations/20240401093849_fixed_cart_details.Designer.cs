@@ -3,6 +3,7 @@ using System;
 using Medicine_Store.DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Medicine_Store.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240401093849_fixed_cart_details")]
+    partial class fixed_cart_details
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -114,8 +117,8 @@ namespace Medicine_Store.Migrations
                     b.Property<int>("amount")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("date")
-                        .HasColumnType("datetime(6)");
+                    b.Property<int>("date")
+                        .HasColumnType("int");
 
                     b.HasKey("cart_id", "thuoc_id");
 

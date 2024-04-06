@@ -1,0 +1,35 @@
+﻿@page
+@model Medicine_Store.Pages.Manage.AddThuocModel
+@{
+}
+
+<div class="container">
+	<div class = "row">
+		<partial name="_ManagePartial"/>
+		<div class="col-md-10">
+			<div row>
+				<input id="search" placeholder="Search"/>
+				<div class="col-sm-5">
+					<div class="form-check form-check-inline">
+						<input type="radio" name="SearchOptions" value="tenthuoc" checked />
+						<label for="SearchOptions">Tên thuốc</label>
+					</div>
+					<div class="form-check form-check-inline">
+						<input type="radio" name="SearchOptions" value="tenhopchat" />
+						<label for="SearchOptions">Tên hợp chất</label>
+					</div>
+				</div>
+				<button class="btn btn-primary" onclick="OnClick_Tim()">Tìm</button>
+			</div>
+			<br/>
+			<label for="ChonThuoc">Chọn Thuốc</label>
+			<select class="form-select" id="ChonThuoc">
+			</select>
+			<hr />
+			<div id="thongtinthuoc">
+				
+			</div>
+		</div>
+	</div>
+</div>
+<script src="~/js/addthuoc.js" type="text/javascript"></script>

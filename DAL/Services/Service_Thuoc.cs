@@ -1,6 +1,7 @@
 ﻿using Medicine_Store.DAL.Entities;
 using Newtonsoft.Json;
 using System.Collections;
+using PagedList;
 
 namespace Medicine_Store.DAL.Services
 {

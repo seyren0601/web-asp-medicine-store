@@ -1,0 +1,28 @@
+﻿@{
+}
+
+<div class="col-md-2">
+    <div class="d-flex flex-column flex-shrink-0 p-3 bg-light">
+        <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
+            <span class="fs-4">Store Manager</span>
+        </a>
+        <hr>
+        <ul class="nav nav-pills flex-column mb-auto">
+            <li class="nav-item">
+                <a asp-page="/Manage/Index" class="nav-link @(Context.Request.Path == "/Manage"?"active":"link-dark")" aria-current="page">
+                    Danh sách thuốc
+                </a>
+            </li>
+            <li>
+                <a asp-page="/Manage/AddThuoc" class="nav-link @(Context.Request.Path == "/Manage/AddThuoc"?"active":"link-dark")">
+                    Thêm thuốc mới
+                </a>
+            </li>
+            <li>
+                <a href="#" class="nav-link link-dark">
+                    Thống kê
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>

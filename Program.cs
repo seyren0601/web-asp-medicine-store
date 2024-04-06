@@ -5,6 +5,8 @@ using Medicine_Store.DAL.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Drawing.Text;
+using PagedList;
+using Medicine_Store;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +17,9 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
 {
     options.SignIn.RequireConfirmedAccount = true;
 }).AddEntityFrameworkStores<ApplicationDbContext>();
+
+builder.Services.AddDbContext<ThuocDbContext>(options =>
+    options.UseMySQL(builder.Configuration.GetConnectionString("ThuocDb")!));
 builder.Services.AddRazorPages();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<Service_Thuoc>();
@@ -61,6 +66,23 @@ app.MapPost("/add_cart", ([FromBody]AddCartRequest request, Service_Cart service
 app.MapGet("/get_stock/{thuoc_id}", (string thuoc_id, Service_Thuoc service) =>
 {
     return service.GetStock(thuoc_id);
+});
+
+app.MapGet("/list_thuoc", ([FromQuery] int page_size, [FromQuery] int page, [FromServices] Service_Thuoc service) =>
+{
+    return service.GetAllThuoc().ToPagedList(page, page_size);
+});
+
+app.MapGet("/find_thuoc", ([FromQuery] string? tenthuoc, [FromQuery] string? tenhoatchat, ThuocDbContext context) =>
+{
+    if(tenthuoc != null)
+    {
+        return context.Medicines.Where(x => x.TEN_THUOC.Contains(tenthuoc, StringComparison.OrdinalIgnoreCase)).Take(5).ToList();
+    }
+    else
+    {
+        return context.Medicines.Where(x => x.HOAT_CHAT.Contains(tenhoatchat, StringComparison.OrdinalIgnoreCase)).Take(5).ToList();
+    }
 });
 
 app.Run();

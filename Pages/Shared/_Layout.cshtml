@@ -37,7 +37,7 @@
                             @if(SignInManager.IsSignedIn(User) && Boolean.Parse(User.Claims.FirstOrDefault(x => x.Type == "Admin").Value))
                             {
                                 <li class="nav-item">
-                                    <a class="nav-link" aria-current="page" asp-page="">Store Manager</a>
+                                    <a class="nav-link" aria-current="page" asp-page="/Manage/Index">Store Manager</a>
                                 </li>
                             }
                         </ul>

@@ -38,5 +38,19 @@ namespace Medicine_Store.DAL.Services
             Thuoc thuoc = _context.Thuoc.FirstOrDefault(t => t.thuoc_id == thuoc_id);
             return thuoc.so_luong_ton;
         }
+
+        public async Task<bool> AddThuoc(Thuoc thuoc)
+        {
+            try
+            {
+                _context.Thuoc.Add(thuoc);
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
     }
 }

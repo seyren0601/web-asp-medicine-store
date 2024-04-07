@@ -37,7 +37,6 @@ function OnClick_Tim() {
 }
 
 function OnChange_ChonThuoc() {
-    console.log("in event");
     var value = $(this).val();
     var thuoc = thuoc_found.find(x => x.id == value);
     let thongtin = $('#thongtinthuoc');
@@ -45,4 +44,10 @@ function OnChange_ChonThuoc() {
     let out = $('<pre>');
     out.text("id: " + thuoc.id + "\nTên thuốc: " + thuoc.teN_THUOC + "\nHoạt chất: " + thuoc.hoaT_CHAT);
     thongtin.append(out);
+    $('#input_id').val("" + thuoc.id);
+    $('#input_hoatchat').val("" + thuoc.hoaT_CHAT);
+    console.log($('#input_hoatchat').val());
+    $('#input_tenthuoc').val("" + thuoc.teN_THUOC);
+    $('#Input_DonGia').removeAttr('disabled');
+    $('#Input_SoLuong').removeAttr('disabled');
 }

@@ -1,6 +1,8 @@
 ﻿@page
 @model Medicine_Store.Pages.Manage.AddThuocModel
+@addTagHelper *, Microsoft.Mvc.AspNetCore.TagHelpers
 @{
+	
 }
 
 <div class="container">
@@ -22,14 +24,39 @@
 				<button class="btn btn-primary" onclick="OnClick_Tim()">Tìm</button>
 			</div>
 			<br/>
-			<label for="ChonThuoc">Chọn Thuốc</label>
-			<select class="form-select" id="ChonThuoc">
-			</select>
-			<hr />
-			<div id="thongtinthuoc">
-				
-			</div>
+			<form method="post">
+				<label for="ChonThuoc">Chọn Thuốc</label>
+				<select class="form-select" id="ChonThuoc">
+				</select>
+				<hr />
+				<div id="thongtinthuoc">
+				</div>
+				<input asp-for="Input.Id" id="input_id" style="display:none" />
+				<input asp-for="Input.HoatChat" class ="form-control" id="input_hoatchat" style="display:none" />
+				<input asp-for="Input.TenThuoc" class ="form-control" id="input_tenthuoc" style="display:none" />
+				<div class="form-group mb-3">
+					<label asp-for="Input.DonGia" class="me-2">Đơn giá</label>
+					<input asp-for="Input.DonGia" type="number" disabled />
+				</div>
+				<div class="form-group">
+					<label asp-for="Input.SoLuong" class="form-label me-2">Số lượng</label>
+					<input asp-for="Input.SoLuong" type="number" disabled />
+				</div>
+				<button type="submit" class="btn btn-primary m-3">Thêm thuốc mới</button>
+			</form>
 		</div>
+		@if(ViewData["Success"] != null)
+		{
+			<div class="alert alert-success">
+				THÊM THÀNH CÔNG
+			</div>
+		}
+		else if(ViewData["Failed"] != null)
+		{
+			<div class="alert alert-danger">
+				THÊM THẤT BẠI
+			</div>
+		}
 	</div>
 </div>
 <script src="~/js/addthuoc.js" type="text/javascript"></script>

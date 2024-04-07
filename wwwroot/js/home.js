@@ -6,6 +6,7 @@ function OnClick_Them() {
     var cart_amount = $('#cart_amount');
     var current_cart_amount = cart_amount.text();
     var MedID = $(this).closest('.card').find('.MedID').text();
+    var MedName = $(this).closest('.card').find('.MedName').text();
     var userID = $("#UserID").text();
 
     if (cart_amount != null) { // Already logged in
@@ -23,16 +24,16 @@ function OnClick_Them() {
                             amount:1
                         }
                     ),
-                    success: function (data) {
+                    success: function (data1) {
                         $.ajax({
                             type: 'GET',
                             url: 'https://localhost:7191/cart_amount/' + userID,
-                            success: function (data) {
-                                console.log(data);
-                                cart_amount.text(data);
+                            success: function (data2) {
+                                console.log(data2);
+                                cart_amount.text(data2);
                                 $.toast({
                                     heading: 'THÊM THÀNH CÔNG VÀO GIỎ HÀNG',
-                                    text: 'Thêm thành công ' + MedID + ' vào giỏ hàng<br>Số lượng hiện tại: ' + data,
+                                    text: 'Thêm thành công ' + MedName + ' vào giỏ hàng<br>Số lượng hiện tại: ' + data1,
                                     icon: 'success',
                                     showHideTransition: 'fade',
                                     position:'top-right'

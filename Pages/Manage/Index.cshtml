@@ -35,17 +35,22 @@
 						<th scope="col">TÊN THUỐC</th>
 						<th scope="col">SỐ LƯỢNG TỒN KHO</th>
 						<th scope="col">ĐƠN GIÁ</th>
+						<th scope="col">THAO TÁC</th>
 					</tr>
 				</thead>
 				<tbody>
 					@foreach (var thuoc in Model.service.GetAllThuoc())
 					{
 						<tr class="table-row">
-							<td>@thuoc.thuoc_id</td>
-							<td>@thuoc.hoat_chat</td>
-							<td>@thuoc.ten</td>
-							<td>@thuoc.so_luong_ton</td>
-							<td>@thuoc.don_gia</td>
+							<td class="thuoc_id">@thuoc.thuoc_id</td>
+							<td class="thuoc_hoatchat">@thuoc.hoat_chat</td>
+							<td class="thuoc_ten">@thuoc.ten</td>
+							<td class="thuoc_so_luong_ton">@thuoc.so_luong_ton</td>
+							<td class="thuoc_don_gia">@thuoc.don_gia</td>
+							<td>
+								<button class="btn btn-warning" onclick="OnClick_Edit">Edit</button>
+								<button class="btn btn-danger" onclick="OnClick_Delete">Delete</button>
+							</td>
 						</tr>
 					}
 				</tbody>
@@ -53,3 +58,4 @@
 		</div>
 	</div>
 </div>
+<script src="~/js/manage_index.js"></script>

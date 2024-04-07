@@ -21,16 +21,23 @@ namespace Medicine_Store.DAL.Services
         public async Task<string> GetThuocImage(Thuoc thuoc)
         {
             HttpClient client = new HttpClient();
-            string jsonString = await client.GetStringAsync($"https://drugbank.vn/services/drugbank/api/public/thuoc/{thuoc.thuoc_id}");
-            dynamic response = JsonConvert.DeserializeObject(jsonString);
-            if(response.images != null)
+            try
             {
-                string imageName = response.images[0];
-                string imageUrl = "https://drugbank.vn/api/public/gridfs/" + imageName;
-                Console.WriteLine(imageUrl);
-                return imageUrl;
+				string jsonString = await client.GetStringAsync($"https://drugbank.vn/services/drugbank/api/public/thuoc/{thuoc.thuoc_id}");
+				dynamic response = JsonConvert.DeserializeObject(jsonString);
+				if (response.images != null)
+				{
+					string imageName = response.images[0];
+					string imageUrl = "https://drugbank.vn/api/public/gridfs/" + imageName;
+					Console.WriteLine(imageUrl);
+					return imageUrl;
+				}
+			}
+            catch
+            {
+                return "";
             }
-            else return "";
+            return "";
         }
 
         public int GetStock(string thuoc_id)

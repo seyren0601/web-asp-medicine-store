@@ -63,7 +63,7 @@ namespace Medicine_Store.DAL.Services
 			int affected = context.SaveChanges();
 			if (affected > 0)
 			{
-                Cart_details detail = cart_details.First();
+                Cart_details detail = context.Cart_Details.FirstOrDefault(d => d.thuoc_id == thuoc_id && d.cart_id == userCart.cart_id);
                 return detail.amount;
 			}
 			return 0;

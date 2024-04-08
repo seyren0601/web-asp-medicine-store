@@ -48,13 +48,39 @@
 							<td class="thuoc_so_luong_ton">@thuoc.so_luong_ton</td>
 							<td class="thuoc_don_gia">@thuoc.don_gia</td>
 							<td>
-								<button class="btn btn-warning" onclick="OnClick_Edit">Edit</button>
+								<button class="btn btn-warning" id="btn-edit-thuoc" type="button" data-bs-toggle="modal" data-bs-target="#editModal" 
+									data-id="@thuoc.thuoc_id"
+									data-hoatchat="@thuoc.hoat_chat"
+									data-ten="@thuoc.ten"
+									data-soluong="@thuoc.so_luong_ton"
+									data-dongia="@thuoc.don_gia">
+									Edit</button>
 								<button class="btn btn-danger" onclick="OnClick_Delete">Delete</button>
 							</td>
 						</tr>
 					}
 				</tbody>
 			</table>
+		</div>
+	</div>
+</div>
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="form-group modal-body">
+				<label for="id">ID</label>
+				<input id="id" class="form-control" type="text" disabled>
+				<label for="ten">Tên Thuốc</label>
+				<input id="ten" class="form-control" type="text" disabled>
+				<label for="hoatchat">Hoạt Chất</label>
+				<input id="hoatchat" class="form-control" type="text" disabled>
+				<label for="soluong">Số Lượng Tồn Kho</label>
+				<input id="soluong" class="form-control" type="number" min="0"/>
+				<label for="dongia">Đơn Giá</label>
+				<input id="dongia" class="form-control" type="number" min="0" />
+				<br>
+				<button id="dialog_edit_button" class="form-control btn btn-secondary" onclick="OnClick_Edit()">Edit</button>
+			</div>
 		</div>
 	</div>
 </div>

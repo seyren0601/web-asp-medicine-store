@@ -85,6 +85,11 @@ app.MapGet("/find_thuoc", ([FromQuery] string? tenthuoc, [FromQuery] string? ten
     }
 });
 
+app.MapPost("/edit", ([FromBody] Thuoc thuoc, Service_Thuoc service) =>
+{
+    return service.EditThuoc(thuoc);
+});
+
 app.Run();
 
 record AddCartRequest

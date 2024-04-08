@@ -13,6 +13,8 @@ namespace Medicine_Store.DAL.Services
             _context = context;
         }
 
+        #region Get
+
         public List<Thuoc> GetAllThuoc()
         {
             return _context.Thuoc.ToList();
@@ -46,7 +48,10 @@ namespace Medicine_Store.DAL.Services
             return thuoc.so_luong_ton;
         }
 
-        public async Task<bool> AddThuoc(Thuoc thuoc)
+		#endregion
+
+		#region Add
+		public async Task<bool> AddThuoc(Thuoc thuoc)
         {
             try
             {
@@ -59,5 +64,25 @@ namespace Medicine_Store.DAL.Services
                 return false;
             }
         }
+        #endregion
+
+        #region Edit
+        public async Task<bool> EditThuoc(Thuoc thuoc)
+        {
+            try
+            {
+                Thuoc record = _context.Thuoc.FirstOrDefault(t => t.thuoc_id == thuoc.thuoc_id);
+                record.so_luong_ton = thuoc.so_luong_ton;
+                record.don_gia = thuoc.don_gia;
+                await _context.SaveChangesAsync();
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+        #endregion
     }
 }

@@ -85,9 +85,14 @@ app.MapGet("/find_thuoc", ([FromQuery] string? tenthuoc, [FromQuery] string? ten
     }
 });
 
-app.MapPost("/edit", ([FromBody] Thuoc thuoc, Service_Thuoc service) =>
+app.MapPut("/edit", ([FromBody] Thuoc thuoc, Service_Thuoc service) =>
 {
     return service.EditThuoc(thuoc);
+});
+
+app.MapDelete("/delete/{id}", (string id, Service_Thuoc service) =>
+{
+    return service.DeleteThuoc(id);
 });
 
 app.Run();

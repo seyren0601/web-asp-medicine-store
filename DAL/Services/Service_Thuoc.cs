@@ -53,6 +53,7 @@ namespace Medicine_Store.DAL.Services
 		#region Add
 		public async Task<bool> AddThuoc(Thuoc thuoc)
         {
+            if (_context.Thuoc.FirstOrDefault(t => t.thuoc_id == thuoc.thuoc_id) != null) return false;
             try
             {
                 _context.Thuoc.Add(thuoc);
@@ -76,6 +77,23 @@ namespace Medicine_Store.DAL.Services
                 record.don_gia = thuoc.don_gia;
                 await _context.SaveChangesAsync();
 
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+        #endregion
+
+        #region Delete
+        public async Task<bool> DeleteThuoc(string thuoc_id)
+        {
+            try
+            {
+                Thuoc thuoc = _context.Thuoc.FirstOrDefault(t => t.thuoc_id == thuoc_id);
+                _context.Remove(thuoc);
+                await _context.SaveChangesAsync();
                 return true;
             }
             catch

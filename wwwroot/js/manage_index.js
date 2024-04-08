@@ -13,13 +13,15 @@
         var datajson = JSON.stringify(thuoc)
         $.ajax({
             url: url,
-            type: "POST",
+            type: "PUT",
             data: datajson,
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function () {
                 $.toast({
-                    heading: 'SỬA THÀNH CÔNG'
+                    heading: 'SỬA THÀNH CÔNG',
+                    icon: 'success',
+                    position: 'top-right'
                 });
                 var element = $('#editModal');
                 var modal = bootstrap.Modal.getInstance(element);
@@ -29,15 +31,41 @@
             },
             error: function () {
                 $.toast({
-                    heading: 'SỬA THẤT BẠI'
+                    heading: 'SỬA THẤT BẠI',
+                    icon: 'error',
+                    position: 'top-right'
                 });
             }
         })
     }
 }
 
-function OnClick_Delete() {
-
+function OnClick_Delete(button) {
+    var confirmed = window.confirm("Bạn có muốn xóa không?")
+    if (confirmed) {
+        var thuoc_id = $(button).closest('.table-row').find('.thuoc_id').text();
+        console.log(thuoc_id)
+        $.ajax({
+            url: "https://localhost:7191/delete/" + thuoc_id,
+            type: "DELETE",
+            success: function () {
+                $.toast({
+                    heading: 'XÓA THÀNH CÔNG',
+                    icon: 'success',
+                    position: 'top-right'
+                });
+                var row = $('.thuoc_id:contains(' + thuoc_id + ')').closest('.table-row')
+                row.remove()
+            },
+            error: function () {
+                $.toast({
+                    heading: 'XÓA THẤT BẠI',
+                    icon: 'error',
+                    position: 'top-right'
+                });
+            }
+        })
+    }
 }
 
 $('#editModal').on('show.bs.modal', function (e) {

@@ -32,7 +32,7 @@ namespace Medicine_Store.Pages.Manage
 			Console.WriteLine(Input.Id);
 			Console.WriteLine(Input.TenThuoc);
 			Console.WriteLine(Input.HoatChat);
-            await _service.AddThuoc(new Thuoc()
+            bool success = await _service.AddThuoc(new Thuoc()
             {
                 thuoc_id = Input.Id,
                 ten = Input.TenThuoc,
@@ -40,8 +40,16 @@ namespace Medicine_Store.Pages.Manage
                 so_luong_ton = Input.SoLuong,
                 don_gia = Input.DonGia
             });
-			ViewData.Remove("Failed");
-			ViewData["Success"] = "success";
+            if (success)
+            {
+                ViewData.Remove("Failed");
+                ViewData["Success"] = "success";
+            }
+            else
+            {
+                ViewData.Remove("Success");
+                ViewData["Failed"] = "failed";
+            }
 			return Page();
         }
 

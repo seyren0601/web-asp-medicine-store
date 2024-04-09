@@ -20,6 +20,11 @@ namespace Medicine_Store.DAL.Services
             return _context.Thuoc.ToList();
         }
 
+        public Thuoc GetThuoc(string thuoc_id)
+        {
+            return _context.Thuoc.FirstOrDefault(t => t.thuoc_id == thuoc_id);
+        }
+
         public async Task<string> GetThuocImage(Thuoc thuoc)
         {
             HttpClient client = new HttpClient();

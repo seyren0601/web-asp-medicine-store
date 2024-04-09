@@ -7,19 +7,19 @@ $(document).ready(function ()
 
 function OnClick_Tim() {
     var tenthuoc_query;
-    var tenhopchat_query;
+    var tenhoatchat_query;
     if ($('input[name="SearchOptions"]:checked').val() == "tenthuoc") {
         tenthuoc_query = $('#search').val();
     }
     else {
-        tenhopchat_query = $('#search').val();
+        tenhoatchat_query = $('#search').val();
     }
     $.ajax({
         url: "https://localhost:7191/find_thuoc",
-        type: "get",
+        type: "GET",
         data: {
             tenthuoc: tenthuoc_query,
-            tenhopchat: tenhopchat_query
+            tenhoatchat: tenhoatchat_query
         },
         success: function (response) {
             var listThuoc = $('#ChonThuoc');

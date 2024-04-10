@@ -26,7 +26,6 @@ function OnClick_Tim() {
             listThuoc.empty();
             thuoc_found = response
             $.each(response, function (i, elem) {
-                console.log(elem['teN_THUOC'])
                 let option = $('<option>');
                 option.attr("value", elem["id"]);
                 option.text(elem["teN_THUOC"]);
@@ -46,7 +45,6 @@ function OnChange_ChonThuoc() {
     thongtin.append(out);
     $('#input_id').val("" + thuoc.id);
     $('#input_hoatchat').val("" + thuoc.hoaT_CHAT);
-    console.log($('#input_hoatchat').val());
     $('#input_tenthuoc').val("" + thuoc.teN_THUOC);
     $('#Input_DonGia').removeAttr('disabled');
     $('#Input_SoLuong').removeAttr('disabled');

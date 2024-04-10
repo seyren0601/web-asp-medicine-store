@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Drawing.Text;
 using PagedList;
 using Medicine_Store;
+using System.ComponentModel.DataAnnotations;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -58,7 +59,7 @@ app.MapGet("/cart_amount/{user_id}", (string user_id, Service_Cart service) =>
     else return StatusCodes.Status404NotFound;
 });
 
-app.MapPost("/add_cart", ([FromBody]AddCartRequest request, Service_Cart service) =>
+app.MapPost("/add_cart", ([FromBody] AddCartRequest request, Service_Cart service) =>
 {
     return service.AddToCart(request.user_id, request.thuoc_id, request.amount);
 });
@@ -95,6 +96,11 @@ app.MapDelete("/delete/{id}", (string id, Service_Thuoc service) =>
     return service.DeleteThuoc(id);
 });
 
+app.MapDelete("/cart/delete", ([FromQuery] string user_id, [FromQuery] string thuoc_id, Service_Cart service) =>
+{
+    return service.RemoveFromCart(user_id, thuoc_id);
+});
+
 app.Run();
 
 record AddCartRequest
@@ -102,4 +108,10 @@ record AddCartRequest
     public string user_id { get; set; }
     public string thuoc_id { get; set; }
     public int amount { get; set; }
+}
+
+record DeleteCartRequest
+{
+    public string user_id { get; set; }
+    public string thuoc_id { get; set; }
 }

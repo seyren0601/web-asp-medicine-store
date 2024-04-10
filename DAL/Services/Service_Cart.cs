@@ -68,5 +68,19 @@ namespace Medicine_Store.DAL.Services
 			}
 			return 0;
 		}
+
+		public Thuoc RemoveFromCart(string user_id, string thuoc_id)
+		{
+            Cart userCart = context.Carts.Where(x => x.user_id == user_id).FirstOrDefault();
+			Thuoc thuoc = context.Thuoc.FirstOrDefault(t => t.thuoc_id == thuoc_id);
+			Cart_details row = context.Cart_Details.FirstOrDefault(row => row.thuoc_id == thuoc_id && row.cart_id == userCart.cart_id);
+			if (userCart != null)
+			{
+				context.Cart_Details.Remove(row);
+				context.SaveChanges();
+				return thuoc;
+			}
+			else return null;
+		}
 	}
 }

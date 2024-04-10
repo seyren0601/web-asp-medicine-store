@@ -29,7 +29,6 @@ function OnClick_Them() {
                             type: 'GET',
                             url: 'https://localhost:7191/cart_amount/' + userID,
                             success: function (data2) {
-                                console.log(data2);
                                 cart_amount.text(data2);
                                 $.toast({
                                     heading: 'THÊM THÀNH CÔNG VÀO GIỎ HÀNG',

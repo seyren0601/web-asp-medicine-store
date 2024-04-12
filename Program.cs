@@ -8,6 +8,8 @@ using System.Drawing.Text;
 using PagedList;
 using Medicine_Store;
 using System.ComponentModel.DataAnnotations;
+using Newtonsoft.Json;
+using Stripe;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -36,7 +38,6 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
-
 app.UseSwagger();
 app.UseSwaggerUI();
 app.UseHttpsRedirection();
@@ -45,6 +46,8 @@ app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
+app.UseEndpoints(endpoints => endpoints.MapControllers());
+StripeConfiguration.ApiKey = "sk_test_51P4ffuESYwMwxhgkRndKhSyQTospDpyPotC3utZzCJeZhTWICzkAxutuYKBCHhVu9fT8Fz7dnqfP8nWN4yM6KqcV00rStPPDEJ";
 app.MapRazorPages();
 
 app.MapPost("/cart_details/{user_id}", (string user_id, Service_Cart service) =>
@@ -105,13 +108,13 @@ app.Run();
 
 record AddCartRequest
 {
-    public string user_id { get; set; }
-    public string thuoc_id { get; set; }
-    public int amount { get; set; }
+	public string user_id { get; set; }
+	public string thuoc_id { get; set; }
+	public int amount { get; set; }
 }
 
 record DeleteCartRequest
 {
-    public string user_id { get; set; }
-    public string thuoc_id { get; set; }
+	public string user_id { get; set; }
+	public string thuoc_id { get; set; }
 }

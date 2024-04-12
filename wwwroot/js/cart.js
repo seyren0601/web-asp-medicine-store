@@ -97,3 +97,9 @@ function OnClick_Plus(button) {
         }
     })
 }
+
+$('#select_shipping').on('change', function () {
+    var ship_price = parseInt($(this).val());
+    var tong_summary = parseInt($('#tong_summary').text());
+    $('#tong_tien').text((tong_summary + ship_price) + " ₫");
+})

@@ -8,9 +8,11 @@
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 
+<!DOCTYPE html>
+<html>
 <head>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="~/css/cart_modal.css"/>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/cart_modal.css" />
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="~/css/jquery.toast.css" />
@@ -26,7 +28,7 @@
                         <div class="col"><h4><b>Giỏ hàng</b></h4></div>
                     </div>
                 </div>
-                @foreach(var thuoc in Model.list_thuoc)
+                @foreach (var thuoc in Model.list_thuoc)
                 {
                     <div class="row border-top border-bottom">
                         <div class="row main align-items-center">
@@ -55,7 +57,7 @@
             </div>
             @{
                 int tongtien = 0;
-                foreach(var thuoc in Model.list_thuoc)
+                foreach (var thuoc in Model.list_thuoc)
                 {
                     tongtien += thuoc.don_gia * Model.cart_details.FirstOrDefault(detail => detail.thuoc_id == thuoc.thuoc_id).amount;
                 }
@@ -67,21 +69,22 @@
                     <div class="col" style="padding-left:0;">Số lượng: <span id="cart_amount">@Model.cart_details.Count</span></div>
                     <div class="col text-right" id="tong_summary">@tongtien &#8363</div>
                 </div>
-                <form>
-                    <p>SHIPPING</p>
-                    <select>
-                        <option class="text-muted" value="15000">Giao tận nhà - 15,000đ</option>
-                        <option class="text-muted" value="2">Nhận tại shop - FREE</option>
-                    </select>
-                </form>
+                <p>SHIPPING</p>
+                <select id="select_shipping">
+                    <option class="text-muted" value="15000">Giao tận nhà - 15,000đ</option>
+                    <option class="text-muted" value="0">Nhận tại shop - FREE</option>
+                </select>
                 <div class="row" style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;">
                     <div class="col">TOTAL PRICE</div>
                     <div class="col text-right" id="tong_tien">@(tongtien + 15000) &#8363</div>
                 </div>
-                <button class="btn">CHECKOUT</button>
+                <form action="/create-payment-session" method="post">
+                    <button type="submit" id="checkout-button" class="btn">CHECKOUT</button>
+                </form>
             </div>
         </div>
     </div>
 </body>
 <script src="js/cart.js"></script>
-
+<script src="https://js.stripe.com/v3/"></script>
+</html>

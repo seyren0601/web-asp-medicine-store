@@ -61,6 +61,8 @@ namespace  Medicine_Store.Areas.Identity.Pages.Account.Manage
         /// </summary>
         public static string TwoFactorAuthentication => "TwoFactorAuthentication";
 
+        public static string DonHang => "DonHang";
+
         /// <summary>
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
         ///     directly from your code. This API may change or be removed in future releases.
@@ -113,6 +115,8 @@ namespace  Medicine_Store.Areas.Identity.Pages.Account.Manage
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
         ///     directly from your code. This API may change or be removed in future releases.
         /// </summary>
+        /// 
+        public static string DonHangNavClass(ViewContext viewContext) => PageNavClass(viewContext, DonHang);
         public static string PageNavClass(ViewContext viewContext, string page)
         {
             var activePage = viewContext.ViewData["ActivePage"] as string

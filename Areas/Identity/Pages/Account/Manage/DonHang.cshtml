@@ -1,12 +1,15 @@
 ﻿@page
-@model Medicine_Store.Pages.Order.DonHangModel
+@model Medicine_Store.Areas.Identity.Pages.Account.Manage.DonHangModel
 @{
+    ViewData["Title"] = "Đơn Hàng";
+    ViewData["ActivePage"] = ManageNavPages.DonHang;
 }
 @using Microsoft.AspNetCore.Identity;
 @using Medicine_Store.DAL.Entities;
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 
+<h1>@ViewData["Title"]</h1>
 <div class="row">
 	<div class="col-md-12">
 		<table class="table table-striped table-hover">
@@ -30,7 +33,8 @@
 						{
 							<td class="trang_thai bg-success">Đã thanh toán</td>
 						}
-						else{
+						else
+						{
 							<td class="trang_thai bg-warning">Chưa thanh toán</td>
 						}
 					</tr>
@@ -39,3 +43,7 @@
 		</table>
 	</div>
 </div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

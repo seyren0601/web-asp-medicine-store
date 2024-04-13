@@ -14,5 +14,9 @@ namespace Medicine_Store.DAL.Entities
 		[ForeignKey("ma_don_hang")]
 		public virtual ICollection<Chi_tiet_don_hang> Chi_Tiet_Don_Hang { get; set; }
 		public bool da_thanh_toan { get; set; }
+		public string PaymentID { get; set; }
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        [DataType(DataType.Date)]
+        public DateTime PaymentDate { get; set; }
 	}
 }

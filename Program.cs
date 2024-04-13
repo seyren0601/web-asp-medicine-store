@@ -27,6 +27,7 @@ builder.Services.AddRazorPages();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<Service_Thuoc>();
 builder.Services.AddScoped<Service_Cart>();
+builder.Services.AddScoped<Service_DonHang>();
 builder.Services.AddEndpointsApiExplorer();
 
 var app = builder.Build();

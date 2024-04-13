@@ -45,5 +45,10 @@ namespace Medicine_Store.DAL.Services
                 return false;
             }
         }
+
+        public List<Don_hang> GetAllDonHang(string UserID)
+        {
+            return _context.Don_hang.Where(dh => dh.user_id == UserID).ToList();
+        }
     }
 }

@@ -63,6 +63,20 @@ app.MapGet("/cart_amount/{user_id}", (string user_id, Service_Cart service) =>
     else return StatusCodes.Status404NotFound;
 });
 
+app.MapGet("/cart_amount/{user_id}/{thuoc_id}", (string user_id, string thuoc_id, Service_Cart cart_service, Service_Thuoc thuoc_cart) =>
+{
+    List<Cart_details> details = cart_service.GetCartDetails(user_id);
+    Cart_details detail = details.FirstOrDefault(th => th.thuoc_id == thuoc_id);
+    if(detail == null)
+    {
+        return 0;
+    }
+    else
+    {
+        return detail.amount;
+    }
+});
+
 app.MapPost("/add_cart", ([FromBody] AddCartRequest request, Service_Cart service) =>
 {
     return service.AddToCart(request.user_id, request.thuoc_id, request.amount);

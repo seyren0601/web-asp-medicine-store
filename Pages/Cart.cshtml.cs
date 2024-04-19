@@ -66,7 +66,7 @@ namespace Medicine_Store.Pages
                 LineItems = items,
                 Mode = "payment",
                 SuccessUrl = domain + $"/Order/Success?session_id={{CHECKOUT_SESSION_ID}}",
-                CancelUrl = domain + "/cancel.html",
+                CancelUrl = domain + $"/Order/Cancel?user_id={UserID}&session_id={{CHECKOUT_SESSION_ID}}",
             };
             var checkout_service = new SessionService();
             Session session = checkout_service.Create(options);

@@ -38,7 +38,7 @@ namespace Medicine_Store.Pages.Order
                 list_thuoc.Add(thuoc_service.GetThuoc(detail.thuoc_id));
             }
 
-            donhang_service.CreateDonHang(UserID, payment_id);
+            donhang_service.CreateDonHang_Success(UserID, payment_id);
             return Page();
         }
     }

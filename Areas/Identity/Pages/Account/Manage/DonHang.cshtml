@@ -22,7 +22,10 @@
 				</tr>
 			</thead>
 			<tbody>
-				@foreach (var don_hang in Model.service.GetAllDonHang(UserManager.GetUserId(User)))
+				@{
+					List<Don_hang> list_donhang = Model.service.GetAllDonHang(UserManager.GetUserId(User)).OrderByDescending(x=>x.ma_don_hang).ToList();
+				}
+				@foreach (var don_hang in list_donhang)
 				{
 					bool da_thanh_toan = don_hang.da_thanh_toan;
 					<tr class="table-row">
@@ -35,7 +38,7 @@
 						}
 						else
 						{
-							<td class="trang_thai bg-warning">Chưa thanh toán</td>
+							<td class="trang_thai bg-danger">Thanh toán thất bại</td>
 						}
 					</tr>
 				}

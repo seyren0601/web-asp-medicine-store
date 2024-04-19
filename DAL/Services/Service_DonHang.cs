@@ -10,7 +10,7 @@ namespace Medicine_Store.DAL.Services
             _context = context;
         }
 
-        public bool CreateDonHang(string UserID, string paymentID)
+        public bool CreateDonHang_Success(string UserID, string paymentID)
         {
             try
             {
@@ -25,7 +25,7 @@ namespace Medicine_Store.DAL.Services
                 });
                 _context.SaveChanges();
 
-                int ma_don_hang = _context.Don_hang.FirstOrDefault(dh => dh.user_id == UserID).ma_don_hang;
+                int ma_don_hang = _context.Don_hang.FirstOrDefault(dh => dh.user_id == UserID && dh.PaymentID == paymentID).ma_don_hang;
                 foreach (var detail in details)
                 {
                     _context.Thuoc.FirstOrDefault(th => th.thuoc_id == detail.thuoc_id).so_luong_ton -= detail.amount;
@@ -37,6 +37,40 @@ namespace Medicine_Store.DAL.Services
                     });
                 }
                 _context.Cart_Details.RemoveRange(details);
+                _context.SaveChanges();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public bool CreateDonHang_Failed(string UserID, string paymentID)
+        {
+            try
+            {
+                Cart user_cart = _context.Carts.FirstOrDefault(c => c.user_id == UserID);
+                List<Cart_details> details = _context.Cart_Details.ToList();
+                _context.Don_hang.Add(new Don_hang
+                {
+                    user_id = UserID,
+                    da_thanh_toan = false,
+                    PaymentDate = DateTime.Now,
+                    PaymentID = paymentID
+                });
+                _context.SaveChanges();
+
+                int ma_don_hang = _context.Don_hang.FirstOrDefault(dh => dh.user_id == UserID && dh.PaymentID == paymentID).ma_don_hang;
+                foreach (var detail in details)
+                {
+                    _context.Chi_tiet_don_hang.Add(new Chi_tiet_don_hang
+                    {
+                        ma_don_hang = ma_don_hang,
+                        thuoc_id = detail.thuoc_id,
+                        so_luong_mua = detail.amount
+                    });
+                }
                 _context.SaveChanges();
                 return true;
             }

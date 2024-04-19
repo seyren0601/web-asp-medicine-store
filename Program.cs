@@ -104,6 +104,11 @@ app.MapGet("/find_thuoc", ([FromQuery] string? tenthuoc, [FromQuery] string? ten
     }
 });
 
+app.MapGet("/thuoc/{thuoc_id}", (string thuoc_id, Service_Thuoc service) =>
+{
+    return service.GetThuoc(thuoc_id);
+});
+
 app.MapPut("/edit", ([FromBody] Thuoc thuoc, Service_Thuoc service) =>
 {
     return service.EditThuoc(thuoc);
@@ -117,6 +122,16 @@ app.MapDelete("/delete/{id}", (string id, Service_Thuoc service) =>
 app.MapDelete("/cart/delete", ([FromQuery] string user_id, [FromQuery] string thuoc_id, Service_Cart service) =>
 {
     return service.RemoveFromCart(user_id, thuoc_id);
+});
+
+app.MapGet("/donhang/{id_donhang}", (int id_donhang, Service_DonHang service) =>
+{
+	return service.GetDonHang(id_donhang);
+});
+
+app.MapGet("/chitiet_donhang/{id_donhang}", (int id_donhang, Service_DonHang service) =>
+{
+    return service.GetChiTietDonHang(id_donhang);
 });
 
 app.Run();

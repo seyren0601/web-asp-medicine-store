@@ -84,5 +84,15 @@ namespace Medicine_Store.DAL.Services
         {
             return _context.Don_hang.Where(dh => dh.user_id == UserID).ToList();
         }
+
+        public List<Chi_tiet_don_hang> GetChiTietDonHang(int id_donhang)
+        {
+            return _context.Chi_tiet_don_hang.Where(c => c.ma_don_hang == id_donhang).ToList();
+        }
+
+        public Don_hang? GetDonHang(int id_donhang)
+        {
+            return _context.Don_hang.FirstOrDefault(dh => dh.ma_don_hang == id_donhang);
+        }
     }
 }

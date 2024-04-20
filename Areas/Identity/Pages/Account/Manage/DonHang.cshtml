@@ -6,6 +6,7 @@
 }
 @using Microsoft.AspNetCore.Identity;
 @using Medicine_Store.DAL.Entities;
+@using X.PagedList;
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 
@@ -21,9 +22,12 @@
 					<th scope="col">Trạng Thái Thanh Toán</th>
 				</tr>
 			</thead>
-			<tbody>
+			<tbody id="table_body">
 				@{
-					List<Don_hang> list_donhang = Model.service.GetAllDonHang(UserManager.GetUserId(User)).OrderByDescending(x=>x.ma_don_hang).ToList();
+					List<Don_hang> list_donhang = Model.service.GetAllDonHang(UserManager.GetUserId(User))
+					.OrderByDescending(x=>x.ma_don_hang)
+					.ToPagedList(1, 10)
+					.ToList();
 				}
 				@foreach (var don_hang in list_donhang)
 				{

@@ -5,7 +5,7 @@ using Medicine_Store.DAL.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Drawing.Text;
-using PagedList;
+using X.PagedList;
 using Medicine_Store;
 using System.ComponentModel.DataAnnotations;
 using Newtonsoft.Json;
@@ -127,6 +127,14 @@ app.MapDelete("/cart/delete", ([FromQuery] string user_id, [FromQuery] string th
 app.MapGet("/donhang/{id_donhang}", (int id_donhang, Service_DonHang service) =>
 {
 	return service.GetDonHang(id_donhang);
+});
+
+app.MapGet("/donhang/paged", ([FromQuery] string user_id, [FromQuery] int page, Service_DonHang service) =>
+{
+	return service.GetAllDonHang(user_id)
+                    .OrderByDescending(x=>x.ma_don_hang)
+                    .ToPagedList(page, 10)
+                    .ToList();
 });
 
 app.MapGet("/chitiet_donhang/{id_donhang}", (int id_donhang, Service_DonHang service) =>

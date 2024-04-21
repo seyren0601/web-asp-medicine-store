@@ -9,7 +9,7 @@
 		@{
 			string ImageUrl = Model.imageURL;
 		}
-		<img class="img-thumbnail" src=@((ImageUrl!="" && ImageUrl != "https://drugbank.vn/api/public/gridfs/")?ImageUrl:"images/placeholder.jpg")/>
+		<img class="img-thumbnail" src=@((ImageUrl!="" && ImageUrl != "https://drugbank.vn/api/public/gridfs/")?ImageUrl:"images/placeholder.jpg") />
 	</div>
 	<div class="col-md-6 bg-light">
 		<div class="row">

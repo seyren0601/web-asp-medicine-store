@@ -87,9 +87,9 @@ app.MapGet("/get_stock/{thuoc_id}", (string thuoc_id, Service_Thuoc service) =>
     return service.GetStock(thuoc_id);
 });
 
-app.MapGet("/list_thuoc", ([FromQuery] int page_size, [FromQuery] int page, [FromServices] Service_Thuoc service) =>
+app.MapGet("/list_thuoc", ([FromQuery] int page, [FromServices] Service_Thuoc service) =>
 {
-    return service.GetAllThuoc().ToPagedList(page, page_size);
+    return service.GetAllThuoc(page);
 });
 
 app.MapGet("/find_thuoc", ([FromQuery] string? tenthuoc, [FromQuery] string? tenhoatchat, ThuocDbContext context) =>
@@ -107,6 +107,11 @@ app.MapGet("/find_thuoc", ([FromQuery] string? tenthuoc, [FromQuery] string? ten
 app.MapGet("/thuoc/{thuoc_id}", (string thuoc_id, Service_Thuoc service) =>
 {
     return service.GetThuoc(thuoc_id);
+});
+
+app.MapGet("/thuoc/image/{thuoc_id}", (string thuoc_id, Service_Thuoc service) =>
+{
+    return service.GetThuocImage(service.GetThuoc(thuoc_id));
 });
 
 app.MapPut("/edit", ([FromBody] Thuoc thuoc, Service_Thuoc service) =>

@@ -1,4 +1,90 @@
-﻿$(document).ready(function () {
+﻿var nextPage = 2;
+var end_of_pages = false;
+var scroll_handled = false;
+var userID = $('#UserID').text();
+
+$(window).scroll(function () {
+    if ($(window).scrollTop() >= $(document).height() - $(window).height() - 10 && !end_of_pages && !scroll_handled) {
+        scroll_handled = true;
+        $.ajax({
+            url: "/list_thuoc/?page=" + nextPage,
+            type: "get",
+            success: function (paged_list) {
+                nextPage += 1;
+                if (paged_list.length > 0) {
+                    var cards = $('#cards');
+                    $.each(paged_list, function (index, thuoc) {
+                        $.ajax({
+                            url: "/thuoc/image/" + thuoc['thuoc_id'],
+                            type: "get",
+                            success: function (imgURL) {
+                                var div_col = $('<div>').addClass('col-mb-5');
+                                var div_card = $('<div>')
+                                    .addClass('card mx-auto mb-4 shadow-sm p-3 rounded')
+                                var img = $('<img>')
+                                    .attr('src', imgURL)
+                                    .addClass('card-img-top')
+                                    .attr('alt', 'hinh_thuoc')
+                                var div_card_body = $('<div>')
+                                    .addClass('card-body p-4')
+                                var div_text_center = $('<div>')
+                                    .addClass('text-center')
+                                var div_ten = $('<div>')
+                                    .addClass('MedName')
+                                    .addClass('h5')
+                                    .text(thuoc['ten'])
+                                var gia_string = thuoc['don_gia'].toLocaleString();
+                                var div_gia = $('<div>')
+                                    .addClass('MedPrice')
+                                    .text(gia_string + ' ₫')
+                                var div_id = $('<div>')
+                                    .addClass('MedID')
+                                    .attr('style', 'display:none')
+                                    .text(thuoc['thuoc_id'])
+                                div_text_center.append(div_ten)
+                                    .append(div_gia)
+                                    .append(div_id)
+                                div_card_body.append(div_text_center)
+                                var div_footer = $('<div>')
+                                    .addClass('card-footer p4 pt-0 border-top-0 bg-transparent')
+
+                                var div_text_center1 = $('<div>')
+                                    .addClass('text-center')
+                                var a_them = $('<a>')
+                                    .addClass('btn btn-outline-dark mt-auto btn_them')
+                                    .attr('href', '#')
+                                    .text('Thêm vào giỏ hàng')
+                                div_text_center1.append(a_them)
+                                div_footer.append(div_text_center1)
+
+                                div_text_center2 = $('<div>')
+                                    .addClass('text-center')
+                                var a_them = $('<a>')
+                                    .addClass('btn btn-outline-primary my-3 btn_chitiet')
+                                    .attr('href', '#')
+                                    .text('Chi tiết')
+                                div_text_center2.append(a_them)
+                                div_footer.append(div_text_center2)
+
+                                div_card.append(img)
+                                    .append(div_card_body)
+                                    .append(div_footer)
+                                div_col.append(div_card)
+                                cards.append(div_col)
+                            }
+                        })
+                    });
+                }
+                else {
+                    end_of_pages = true;
+                }
+                scroll_handled = false;
+            }
+        })
+    }
+});
+
+$(document).ready(function () {
     $('.btn_them').on("click", OnClick_Them);
     $('.btn_chitiet').on("click", OnClick_ChiTiet);
 })

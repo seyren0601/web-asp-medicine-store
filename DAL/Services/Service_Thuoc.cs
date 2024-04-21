@@ -20,6 +20,11 @@ namespace Medicine_Store.DAL.Services
             return _context.Thuoc.ToList();
         }
 
+        public List<Thuoc> GetAllThuoc(int page)
+        {
+            return _context.Thuoc.ToPagedList(page, 8).ToList();
+        }
+
         public Thuoc GetThuoc(string thuoc_id)
         {
             return _context.Thuoc.FirstOrDefault(t => t.thuoc_id == thuoc_id);
@@ -35,9 +40,15 @@ namespace Medicine_Store.DAL.Services
 				if (response.images != null)
 				{
 					string imageName = response.images[0];
-					string imageUrl = "https://drugbank.vn/api/public/gridfs/" + imageName;
-					Console.WriteLine(imageUrl);
-					return imageUrl;
+                    if (!imageName.Contains("https"))
+                    {
+						string imageUrl = "https://drugbank.vn/api/public/gridfs/" + imageName;
+                        return imageUrl;
+					}
+                    else
+                    {
+                        return imageName;
+                    }
 				}
 			}
             catch

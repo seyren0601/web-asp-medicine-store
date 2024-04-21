@@ -15,7 +15,7 @@
 	<div class="col-md-12">
 		<table class="table table-striped table-hover">
 			<thead>
-				<tr>
+				<tr class="table-row">
 					<th scope="col">Mã Đơn Hàng</th>
 					<th scope="col">Ngày Thanh Toán</th>
 					<th scope="col">Mã Thanh Toán</th>
@@ -36,7 +36,7 @@
 						data-id="@don_hang.ma_don_hang">
 						<td class="ma_don_hang">@don_hang.ma_don_hang</td>
 						<td class="ngay_thanh_toan">@don_hang.PaymentDate.ToString()</td>
-						<td class="ma_thanh_toan">@don_hang.PaymentID</td>
+						<td class="ma_thanh_toan"><span class="mtt text-truncate">@don_hang.PaymentID</span></td>
 						@if (da_thanh_toan)
 						{
 							<td class="trang_thai bg-success">Đã thanh toán</td>

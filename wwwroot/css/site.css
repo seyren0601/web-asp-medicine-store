@@ -44,3 +44,8 @@ label {
     float: left;
     text-align: left;
 }
+
+.mtt{
+    display: inline-block;
+    max-width: 10rem;
+}

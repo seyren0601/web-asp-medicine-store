@@ -8,7 +8,7 @@
 <div class="container searchbar">
     <form class="form-horizontal" role="form" method="post">
         <div class="form-group row">
-            <label class="form-label col-sm-1 fs-4 text-center" asp-for="MedSearch">SEARCH</label>
+            <button class="btn btn-primary col-sm-1 fs-4 text-center" type="submit" asp-for="MedSearch">SEARCH</button>
             <div class="col-sm-10">
                 <input class="form-control" type="text" asp-for="MedSearch" placeholder="Tìm dược phẩm"/>
             </div>
@@ -17,11 +17,11 @@
             <div class="col-sm-1"></div>
             <div class="col-sm-5">
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="SearchOptions" value="tenThuoc" />
+                    <input class="form-check-input" asp-for="SearchOptions" type="radio" value="tenThuoc" />
                     <label class="form-check-label" for="SearchOptions">Tên thuốc</label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="SearchOptions" value="tenHopChat" />
+                    <input class="form-check-input" asp-for="SearchOptions" type="radio" value="tenHopChat" />
                     <label class="form-check-label" for="SearchOptions">Tên hợp chất</label>
                 </div>
             </div>

@@ -40,6 +40,7 @@ namespace Medicine_Store.DAL.Services
 				if (response.images != null)
 				{
 					string imageName = response.images[0];
+                    if (imageName == null) return "images/placeholder.jpg";
                     if (!imageName.Contains("https"))
                     {
 						string imageUrl = "https://drugbank.vn/api/public/gridfs/" + imageName;

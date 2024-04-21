@@ -9,7 +9,10 @@ namespace Medicine_Store.Pages
     {
         private readonly ILogger<IndexModel> _logger;
         public Service_Thuoc _service_thuoc;
+        [BindProperty]
         public string MedSearch { get; set; }
+        [BindProperty]
+        public string SearchOptions { get; set; }
         public List<Thuoc> ListThuoc { get; set; }
 
         public IndexModel(ILogger<IndexModel> logger, Service_Thuoc _service_thuoc)
@@ -21,6 +24,19 @@ namespace Medicine_Store.Pages
         public void OnGet()
         {
             ListThuoc = _service_thuoc.GetAllThuoc();
+        }
+
+        public IActionResult OnPost()
+        {
+            if(SearchOptions == "tenThuoc")
+            {
+				ListThuoc = _service_thuoc.GetAllThuoc().Where(x => x.ten.Contains(MedSearch, StringComparison.OrdinalIgnoreCase)).Take(5).ToList();
+			}
+            else if(SearchOptions == "tenHopChat")
+            {
+				ListThuoc = _service_thuoc.GetAllThuoc().Where(x => x.hoat_chat.Contains(MedSearch, StringComparison.OrdinalIgnoreCase)).Take(5).ToList();
+			}
+            return Page();
         }
     }
 }

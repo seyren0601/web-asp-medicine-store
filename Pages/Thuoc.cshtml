@@ -3,6 +3,12 @@
 @{
 	ViewData["Title"] = "Chi tiết Thuốc";
 }
+@using Microsoft.AspNetCore.Identity;
+@using Medicine_Store.DAL.Entities;
+@inject SignInManager<ApplicationUser> SignInManager
+@{
+	bool signedIn = SignInManager.IsSignedIn(User);
+}
 
 <div class="row justify-content-center my-3">
 	<div class="col-md-6">
@@ -39,7 +45,7 @@
 				<button class="btn-primary btn col-md-1" onclick="OnClick_Minus()">-</button>
 				<div class="col-md-1 px-3 text-center" id="amount">1</div>
 				<button class="btn-primary btn col-md-1" onclick="OnClick_Plus()">+</button>
-				<button class="btn-primary btn col-md-3 mx-5" onclick="OnClick_Them()">Thêm vào giỏ hàng</button>
+				<a class="btn-primary btn col-md-3 mx-5" onclick="OnClick_Them()" @(!signedIn ? "href=Identity/Account/Register":"" )>Thêm vào giỏ hàng</a>
 			</div>
 		}
 		else

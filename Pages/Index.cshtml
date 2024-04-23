@@ -4,6 +4,12 @@
     ViewData["Title"] = "Home page";
 }
 @using X.PagedList;
+@using Microsoft.AspNetCore.Identity;
+@using Medicine_Store.DAL.Entities;
+@inject SignInManager<ApplicationUser> SignInManager
+@{
+    bool signedIn = SignInManager.IsSignedIn(User);
+}
 
 <div class="container searchbar">
     <form class="form-horizontal" role="form" method="post">
@@ -45,7 +51,7 @@
                             </div>
                         </div>
                         <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                            <div class="text-center"><a class="btn btn-outline-dark mt-auto btn_them">Thêm vào giỏ hàng</a></div>
+                            <div class="text-center"><a class="btn btn-outline-dark mt-auto btn_them" @(!signedIn ? "href=Identity/Account/Register" : "")>Thêm vào giỏ hàng</a></div>
                             <div class="text-center"><a class="btn btn-outline-primary my-3 btn_chitiet">Chi tiết</a></div>
                         </div>
                     </div>
